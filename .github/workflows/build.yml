@@ -33,7 +33,7 @@ jobs:
           ext_dll="1.6/Source/MinesAutomatedExtension/bin/Release/net472/MinesAutomatedExtension.dll"
           [[ -f "$main_dll" ]] || { echo "Missing DLL: $main_dll" >&2; exit 1; }
           [[ -f "$ext_dll" ]] || { echo "Missing DLL: $ext_dll" >&2; exit 1; }
-          echo "## DLL Comparison" >> "$GITHUB_STEP_SUMMARY"
+          echo "## Built DLL Metadata Comparison" >> "$GITHUB_STEP_SUMMARY"
           echo "| DLL | Project | Size (bytes) | SHA256 |" >> "$GITHUB_STEP_SUMMARY"
           echo "| --- | --- | ---: | --- |" >> "$GITHUB_STEP_SUMMARY"
           echo "| MinesAutomated.dll | MinesAutomated | $(stat -c%s "$main_dll") | $(sha256sum "$main_dll" | cut -d' ' -f1) |" >> "$GITHUB_STEP_SUMMARY"
