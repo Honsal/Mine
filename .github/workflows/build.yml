@@ -26,6 +26,16 @@ jobs:
       - name: Build
         run: dotnet build 1.6/Source/MinesAutomated.sln --configuration Release --no-restore
 
+      - name: Compare built DLLs
+        run: |
+          main_dll="1.6/Source/MinesAutomated/bin/Release/net472/MinesAutomated.dll"
+          ext_dll="1.6/Source/MinesAutomatedExtension/bin/Release/net472/MinesAutomatedExtension.dll"
+          echo "## DLL Comparison" >> "$GITHUB_STEP_SUMMARY"
+          echo "| DLL | Project | Size (bytes) | SHA256 |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| --- | --- | ---: | --- |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| MinesAutomated.dll | MinesAutomated | $(stat -c%s "$main_dll") | $(sha256sum "$main_dll" | cut -d' ' -f1) |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| MinesAutomatedExtension.dll | MinesAutomatedExtension | $(stat -c%s "$ext_dll") | $(sha256sum "$ext_dll" | cut -d' ' -f1) |" >> "$GITHUB_STEP_SUMMARY"
+
       - name: Upload Assemblies
         uses: actions/upload-artifact@v4
         with:
