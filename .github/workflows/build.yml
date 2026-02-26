@@ -28,8 +28,11 @@ jobs:
 
       - name: Compare built DLLs
         run: |
+          set -euo pipefail
           main_dll="1.6/Source/MinesAutomated/bin/Release/net472/MinesAutomated.dll"
           ext_dll="1.6/Source/MinesAutomatedExtension/bin/Release/net472/MinesAutomatedExtension.dll"
+          [[ -f "$main_dll" ]] || { echo "Missing DLL: $main_dll" >&2; exit 1; }
+          [[ -f "$ext_dll" ]] || { echo "Missing DLL: $ext_dll" >&2; exit 1; }
           echo "## DLL Comparison" >> "$GITHUB_STEP_SUMMARY"
           echo "| DLL | Project | Size (bytes) | SHA256 |" >> "$GITHUB_STEP_SUMMARY"
           echo "| --- | --- | ---: | --- |" >> "$GITHUB_STEP_SUMMARY"
